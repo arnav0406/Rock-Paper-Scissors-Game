@@ -17,61 +17,71 @@ function getComputerChoice(){
         return "scissor";
     }
 }
-function getHumanChoice(){
-    let ch=prompt("Choose Rock/Paper/Scissor");
-    return ch.toLowerCase();
-}
 function playRound(humanChoice,computerChoice){
         if(computerChoice==humanChoice)
     {
-        return "You both choose "+ humanChoice +" its a draw";
+        return res.textContent="You both choose "+ humanChoice +" its a draw"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="rock"&& humanChoice=="paper")
     {
         humanScore++;
-        return "You win, Paper beats Rock";
+        return res.textContent="You win, Paper beats Rock"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="paper"&&humanChoice=="scissor")
     {
         humanScore++;
-        return "You win, Scissor beats Paper";
+        return res.textContent="You win, Scissor beats Paper"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="scissor"&&humanChoice=="rock")
     {
         humanScore++;
-        return "You win, Rock beats Scissor";
+        return res.textContent="You win, Rock beats Scissor"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="rock"&& humanChoice=="scissor")
     {
         computerScore++;
-        return "You lose, Rock beats Scissor";
+        return res.textContent="You lose, Rock beats Scissor"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="paper"&& humanChoice=="rock")
     {
         computerScore++;
-        return "You lose, Paper beats Rock";
+        return res.textContent="You lose, Paper beats Rock"+"You "+humanScore+"-"+computerScore+" Bot";
     }
     else if(computerChoice=="scissor"&&humanChoice=="paper")
     {
         computerScore++;
-        return "You lose, Scissor beats Paper";
+        return res.textContent="You lose, Scissor beats Paper"+"You "+humanScore+"-"+computerScore+" Bot";
     }
 }
-function playGame(){
-    for(let i=1;i<=5;i++)
-    {
-        console.log("Enter your choice "+i);
-        console.log((playRound(getHumanChoice(),getComputerChoice())));
+let pap= document.querySelector('.paper');
+let roc=document.querySelector('.rock');
+let sci=document.querySelector('.scissor');
+let res=document.querySelector('.result');
+
+pap.addEventListener('click',function(){
+    playRound("paper",getComputerChoice());
+    checkWinner();
+})
+roc.addEventListener('click',function(){
+    playRound("rock",getComputerChoice());
+    checkWinner();
+})
+sci.addEventListener('click',function(){
+    playRound("scissor",getComputerChoice());
+    checkWinner();
+})
+function checkWinner(){
+    if(computerScore===5){
+        res.textContent="You lose "+computerScore+"-"+humanScore+" You can try again, who knows if u can win";
+        disableButtons();
     }
-    console.log("Final score of the game after 5 rounds\n Computer's score = "+computerScore+"\n Your score = "+humanScore);
-    if(computerScore>humanScore){
-        console.log("You lost by "+computerScore+"-"+humanScore+" Don't give up, keep trying one day you'll succeed");
-    }
-    else if(humanScore>computerScore){
-        console.log("You win by "+humanScore+"-"+computerScore+" Nice game, keep it up ");
-    }
-    else{
-        console.log("Its a draw "+computerScore+"-"+humanScore+" That was close !, try again you can do it !");
+    else if(humanScore===5){
+        res.textContent="You win by "+humanScore+"-"+computerScore+" Nice game, keep it up ";
+        disableButtons();
     }
 }
-playGame();
+function disableButtons() {
+    pap.disabled = true;
+    roc.disabled = true;
+    sci.disabled = true;
+}
